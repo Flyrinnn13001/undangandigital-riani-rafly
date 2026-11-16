@@ -341,10 +341,6 @@
     if (musicToggle) {
       musicToggle.hidden = false;
     }
-    const waFab = document.getElementById("wa-fab");
-    if (waFab) {
-      waFab.hidden = false;
-    }
 
     startMusicWithFade();
 
@@ -724,118 +720,6 @@
   }
 
   /* -------------------------------------------------------
-     WHATSAPP SHARE & DIRECT SENDER
-     ------------------------------------------------------- */
-  function normalizePhoneToWa(raw) {
-    if (!raw) return "";
-    let digits = String(raw).replace(/\D+/g, "");
-    if (digits.startsWith("0")) {
-      digits = "62" + digits.slice(1);
-    } else if (digits.startsWith("8")) {
-      digits = "62" + digits;
-    }
-    return digits.length >= 9 ? digits : "";
-  }
-
-  function buildBaseInviteUrl() {
-    const loc = window.location;
-    if (loc.protocol === "http:" || loc.protocol === "https:") {
-      return `${loc.origin}${loc.pathname}`;
-    }
-    return loc.href.split("?")[0].split("#")[0];
-  }
-
-  function buildGuestInviteUrl(guestName) {
-    const base = buildBaseInviteUrl();
-    const clean = (guestName || "").trim();
-    if (!clean) return base;
-    return `${base}?to=${encodeURIComponent(clean)}`;
-  }
-
-  function buildWaInvitationText(guestName, inviteUrl) {
-    const targetName = (guestName || "").trim() || "Tamu Undangan";
-    return [
-      "Kepada Yth.",
-      `Saudari *${targetName}*`,
-      "",
-      "_Assalamu’alaikum Warahmatullahi Wabarakatuh_",
-      "",
-      "Tanpa mengurangi rasa hormat, perkenankan kami mengundang Saudari untuk menghadiri acara pernikahan kami:",
-      "",
-      "*Siti Riani & Muhamad Rafly Kristiadi*",
-      "",
-      "📅 *Minggu, 22 Agustus 2027*",
-      "🕗 *Akad Nikah:* 08.00 WIB",
-      "🕘 *Resepsi:* 09.00 WIB s/d Selesai",
-      "📍 *Lokasi:* Kediaman Rumah Riani, Dusun 2 RT 001 RW 005, Desa Karangtengah, Kec. Karangsembung, Kab. Cirebon",
-      "",
-      "Berikut link undangan lengkap untuk Saudari:",
-      inviteUrl,
-      "",
-      "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Saudari berkenan hadir dan memberikan doa restu.",
-      "",
-      "_Wassalamu’alaikum Warahmatullahi Wabarakatuh_",
-      "",
-      "Kami yang berbahagia,",
-      "*Riani & Rafly*"
-    ].join("\n");
-  }
-
-  function initWhatsAppShare() {
-    const nameInput = document.getElementById("wa-guest-name");
-    const phoneInput = document.getElementById("wa-guest-phone");
-    const previewBox = document.getElementById("wa-message-preview");
-    const sendBtn = document.getElementById("btn-send-wa-direct");
-    const copyTextBtn = document.getElementById("btn-copy-wa-text");
-    const copyLinkBtn = document.getElementById("btn-copy-wa-link");
-
-    if (!nameInput || !previewBox || !sendBtn) return;
-
-    const params = new URLSearchParams(window.location.search);
-    const initialTo = (params.get("to") || "").trim();
-    if (initialTo) {
-      nameInput.value = initialTo;
-    }
-
-    function updateWaHrefFromBox() {
-      const phone = normalizePhoneToWa(phoneInput ? phoneInput.value : "");
-      const text = previewBox.value;
-      const endpoint = phone ? `https://wa.me/${phone}` : "https://wa.me/";
-      sendBtn.href = `${endpoint}?text=${encodeURIComponent(text)}`;
-    }
-
-    function regenerateMessage() {
-      const gName = nameInput.value.trim();
-      const link = buildGuestInviteUrl(gName);
-      previewBox.value = buildWaInvitationText(gName, link);
-      updateWaHrefFromBox();
-    }
-
-    nameInput.addEventListener("input", regenerateMessage);
-    if (phoneInput) {
-      phoneInput.addEventListener("input", updateWaHrefFromBox);
-    }
-    previewBox.addEventListener("input", updateWaHrefFromBox);
-
-    if (copyTextBtn) {
-      copyTextBtn.addEventListener("click", async () => {
-        const ok = await copyText(previewBox.value);
-        showToast(ok ? "Pesan undangan WhatsApp berhasil disalin" : "Silakan salin teks secara manual");
-      });
-    }
-
-    if (copyLinkBtn) {
-      copyLinkBtn.addEventListener("click", async () => {
-        const link = buildGuestInviteUrl(nameInput.value.trim());
-        const ok = await copyText(link);
-        showToast(ok ? "Link undangan tamu berhasil disalin" : "Silakan salin link secara manual");
-      });
-    }
-
-    regenerateMessage();
-  }
-
-  /* -------------------------------------------------------
      INIT ALL
      ------------------------------------------------------- */
   document.addEventListener("DOMContentLoaded", () => {
@@ -849,7 +733,6 @@
     initGalleryLightbox();
     initCopyButtons();
     initRsvp();
-    initWhatsAppShare();
 
     if (btnOpenInvitation) {
       btnOpenInvitation.addEventListener("click", unlockInvitation);
