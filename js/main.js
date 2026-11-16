@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "riani_rafly_rsvp_wishes_v1";
+  const STORAGE_KEY = "riani_rafly_rsvp_wishes_v2";
   const EVENT_ISO_WIB = "2027-08-22T08:00:00+07:00";
 
   const GALLERY_ITEMS = [
@@ -24,20 +24,6 @@
   ];
 
   const DEFAULT_WISHES = [
-    {
-      name: "Ayu Lestari",
-      status: "Hadir",
-      count: 2,
-      message: "MasyaAllah, selamat menempuh hidup baru Riani & Rafly! Semoga menjadi keluarga sakinah, mawaddah, warahmah hingga ke surga-Nya.",
-      time: "Baru saja"
-    },
-    {
-      name: "Dian Purnama",
-      status: "Hadir",
-      count: 1,
-      message: "Barakallahu lakuma wa baraka 'alaikuma. Lancar selalu sampai hari akad nanti ya Riani sayang!",
-      time: "1 jam lalu"
-    },
     {
       name: "Fajar Nugroho",
       status: "InsyaAllah",
