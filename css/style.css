@@ -1790,6 +1790,15 @@ body:not(.is-locked) .invitation-content {
   color: var(--text-muted);
 }
 
+.footer-watermark {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 12.5px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--pink-deep);
+}
+
 /* =========================================================
    FLOATING MUSIC BUTTON ("WEDDING NASHEED") & TOAST
    ========================================================= */
