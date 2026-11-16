@@ -7,19 +7,19 @@
   const GALLERY_ITEMS = [
     {
       src: "assets/images/gallery-1.jpg",
-      caption: "Langkah bersama di taman mawar menuju lembar kehidupan baru"
+      caption: "Senyum hangat penuh rasa syukur melangkah bersama menuju hari bahagia"
     },
     {
       src: "assets/images/gallery-2.jpg",
-      caption: "Senyum hangat di sisi air mancur taman dalam cahaya senja"
+      caption: "Kebersamaan sederhana yang selalu membawa ketenangan dan doa"
     },
     {
       src: "assets/images/gallery-3.jpg",
-      caption: "Di bawah naungan gazebo berkubah bertabur mawar pastel"
+      caption: "Di bawah langit cerah, menyatukan niat tulus menuju ikatan suci"
     },
     {
       src: "assets/images/gallery-4.jpg",
-      caption: "Menyambut doa dan restu di gerbang taman penuh bunga"
+      caption: "Momen manis bersama buket bunga sebagai pengingat hari istimewa"
     }
   ];
 
