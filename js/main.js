@@ -47,6 +47,7 @@
   let musicFadeTimer = null;
   let isMusicPlaying = false;
   let userPausedMusic = false;
+  let hasOpenedOnce = false;
   let gestureUnlockBound = false;
   let activeLightboxIndex = 0;
 
@@ -82,7 +83,7 @@
   /* -------------------------------------------------------
      COVER WALK-THROUGH ANIMATION
      ------------------------------------------------------- */
-  function playIntroAnimation() {
+  function playIntroAnimation(shouldAutoUnlock = false) {
     if (!coverStage) return;
     window.clearTimeout(introReadyTimer);
     coverStage.classList.remove("is-playing", "is-arrived");
@@ -90,12 +91,16 @@
     // Force style recalculation so replay restarts CSS keyframe timelines cleanly
     void coverStage.offsetWidth;
 
-    window.setTimeout(() => {
-      coverStage.classList.add("is-playing");
-      introReadyTimer = window.setTimeout(() => {
-        coverStage.classList.add("is-arrived");
-      }, 3450);
-    }, 180);
+    coverStage.classList.add("is-playing");
+    introReadyTimer = window.setTimeout(() => {
+      coverStage.classList.add("is-arrived");
+      const btnText = btnOpenInvitation ? btnOpenInvitation.querySelector("span") : null;
+      if (btnText) btnText.textContent = "Lihat Isi Undangan";
+
+      if (shouldAutoUnlock) {
+        revealInvitationContent();
+      }
+    }, 4350);
   }
 
   /* -------------------------------------------------------
@@ -317,7 +322,6 @@
 
   function initMusicToggle() {
     if (!musicToggle || !bgMusic) return;
-    musicToggle.hidden = false;
     musicToggle.addEventListener("click", () => {
       if (isMusicPlaying) {
         userPausedMusic = true;
@@ -358,16 +362,8 @@
     targets.forEach((el) => revealObserver.observe(el));
   }
 
-  function unlockInvitation() {
+  function revealInvitationContent() {
     body.classList.remove("is-locked");
-    if (musicToggle) {
-      musicToggle.hidden = false;
-    }
-
-    if (!userPausedMusic) {
-      startMusicWithFade(false);
-    }
-
     window.setTimeout(() => {
       if (ayatSection) {
         ayatSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -376,6 +372,24 @@
       const firstReveal = ayatSection ? ayatSection.querySelector(".reveal") : null;
       if (firstReveal) firstReveal.classList.add("is-visible");
     }, 120);
+  }
+
+  function unlockInvitation() {
+    if (musicToggle) {
+      musicToggle.hidden = false;
+    }
+
+    if (!userPausedMusic) {
+      startMusicWithFade(false);
+    }
+
+    if (!hasOpenedOnce) {
+      hasOpenedOnce = true;
+      playIntroAnimation(true);
+      return;
+    }
+
+    revealInvitationContent();
   }
 
   /* -------------------------------------------------------
@@ -759,8 +773,6 @@
     initGuestName();
     initPetalCanvas();
     initMusicToggle();
-    playIntroAnimation();
-    startMusicWithFade(true);
     initScrollReveal();
     initCountdown();
     initSaveDateActions();
@@ -773,7 +785,7 @@
     }
 
     if (replayIntroBtn) {
-      replayIntroBtn.addEventListener("click", playIntroAnimation);
+      replayIntroBtn.addEventListener("click", () => playIntroAnimation(false));
     }
   });
 })();
