@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generator &amp; Kirim Undangan WhatsApp — Riani &amp; Rafly</title>
+  <title>Halaman Pengirim WhatsApp (Khusus Mempelai) — Riani &amp; Rafly</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
@@ -56,13 +56,17 @@
       background: linear-gradient(165deg, #fffdf9 0%, #fcf2f5 60%, #eef6fb 100%);
     }
 
-    .back-link {
+    .badge-host {
       display: inline-block;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #3f6682;
-      text-decoration: none;
-      margin-bottom: 10px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--pink-pastel);
+      color: var(--pink-deep);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
 
     h1 {
@@ -77,6 +81,29 @@
     .subtitle {
       font-size: 13.5px;
       color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .open-invite-link {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #3f6682;
+      text-decoration: underline;
+    }
+
+    .wa-badge-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #e3f7ec;
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #197a41;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 12px;
     }
 
     .field {
@@ -113,6 +140,43 @@
     input:focus, textarea:focus {
       border-color: var(--pink-deep);
       box-shadow: 0 0 0 3px rgba(247, 220, 226, 0.5);
+    }
+
+    .btn-whatsapp-send {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      min-height: 46px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #25d366 0%, #1da851 100%);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(29, 168, 81, 0.28);
+      margin-bottom: 10px;
+    }
+
+    .secondary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-outline {
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(201, 164, 108, 0.6);
+      background: #fffdf9;
+      color: var(--text-heading);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     .btn-primary {
@@ -237,9 +301,6 @@
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
     }
 
     .btn-del {
@@ -271,22 +332,57 @@
 <body>
   <div class="container">
     <div class="card header-card">
-      <a href="index.html" class="back-link">&larr; Kembali ke Halaman Undangan</a>
+      <span class="badge-host">Halaman Khusus Mempelai (Tidak Tampil di Undangan Tamu)</span>
       <h1>Riani &amp; Rafly</h1>
-      <p class="subtitle">Dashboard Generator Nama Tamu &amp; Kirim Langsung ke WhatsApp</p>
+      <p class="subtitle">Generator Nama Tamu &amp; Pengirim Undangan ke WhatsApp</p>
+      <a href="index.html" target="_blank" class="open-invite-link">Lihat Halaman Undangan Tamu (index.html) &rarr;</a>
     </div>
 
     <div class="card">
       <div class="field">
-        <label for="base-url">Alamat Website Undangan (Link Dasar)</label>
-        <span class="hint">Otomatis terisi alamat website saat ini, atau tempel link GitHub Pages / Netlify Anda:</span>
+        <label for="base-url">Alamat Website Undangan Online Anda</label>
+        <span class="hint">Tempel link GitHub Pages / Netlify undangan Anda di sini (contoh: <code>https://username.github.io/undangan-riani-rafly/</code>):</span>
         <input type="url" id="base-url" />
+      </div>
+    </div>
+
+    <!-- KIRIM CEPAT 1 TAMU -->
+    <div class="card">
+      <div class="wa-badge-header">
+        <span>Kirim Cepat ke 1 Tamu</span>
       </div>
 
       <div class="field">
-        <label for="bulk-input">Daftar Nama Tamu (1 baris = 1 tamu)</label>
-        <span class="hint">Bisa tulis nama saja (contoh: <strong>Ayu Lestari</strong>) atau nama beserta nomor WA dipisah tanda hubung/koma (contoh: <strong>Ayu Lestari - 081234567890</strong>):</span>
-        <textarea id="bulk-input" rows="5" placeholder="Ayu Lestari&#10;Nadia Putri - 081234567890&#10;Dinda Maharani&#10;Siti Nurhaliza"></textarea>
+        <label for="single-name">Nama Tamu Tujuan</label>
+        <input type="text" id="single-name" placeholder="Contoh: Ayu Lestari" maxlength="80" />
+      </div>
+
+      <div class="field">
+        <label for="single-phone">Nomor WA Tamu (Opsional — kosongkan jika ingin pilih dari kontak WA)</label>
+        <input type="tel" id="single-phone" placeholder="Contoh: 081234567890" maxlength="20" />
+      </div>
+
+      <div class="field">
+        <label for="single-preview">Pratinjau Pesan &amp; Link WhatsApp:</label>
+        <textarea id="single-preview" rows="6"></textarea>
+      </div>
+
+      <a href="#" id="btn-single-wa" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-send">
+        <span>Kirim Langsung ke WhatsApp</span>
+      </a>
+
+      <div class="secondary-grid">
+        <button type="button" class="btn-outline" id="btn-single-copy-msg">Salin Pesan WA</button>
+        <button type="button" class="btn-outline" id="btn-single-copy-link">Salin Link Saja</button>
+      </div>
+    </div>
+
+    <!-- GENERATOR DAFTAR TAMU MASSAL -->
+    <div class="card">
+      <div class="field">
+        <label for="bulk-input">Tambah Banyak Nama Tamu Sekaligus (1 baris = 1 tamu)</label>
+        <span class="hint">Contoh: <strong>Ayu Lestari</strong> atau <strong>Nadia Putri - 081234567890</strong></span>
+        <textarea id="bulk-input" rows="4" placeholder="Ayu Lestari&#10;Nadia Putri - 081234567890&#10;Dinda Maharani"></textarea>
       </div>
 
       <button type="button" class="btn-primary" id="btn-generate">
@@ -311,6 +407,14 @@
 
       const BULK_KEY = "riani_rafly_wa_guest_list_v1";
       const baseUrlInput = document.getElementById("base-url");
+
+      const singleName = document.getElementById("single-name");
+      const singlePhone = document.getElementById("single-phone");
+      const singlePreview = document.getElementById("single-preview");
+      const singleWaBtn = document.getElementById("btn-single-wa");
+      const singleCopyMsg = document.getElementById("btn-single-copy-msg");
+      const singleCopyLink = document.getElementById("btn-single-copy-link");
+
       const bulkInput = document.getElementById("bulk-input");
       const generateBtn = document.getElementById("btn-generate");
       const clearBtn = document.getElementById("btn-clear-all");
@@ -345,13 +449,15 @@
 
       function buildInviteLink(name) {
         const base = (baseUrlInput.value || detectDefaultInviteUrl()).trim().split("?")[0];
-        return `${base}?to=${encodeURIComponent(name.trim())}`;
+        const clean = (name || "").trim();
+        return clean ? `${base}?to=${encodeURIComponent(clean)}` : base;
       }
 
       function buildMessage(name, link) {
+        const target = (name || "").trim() || "Tamu Undangan";
         return [
           "Kepada Yth.",
-          `Saudari *${name.trim()}*`,
+          `Saudari *${target}*`,
           "",
           "_Assalamu’alaikum Warahmatullahi Wabarakatuh_",
           "",
@@ -399,6 +505,33 @@
         return ok;
       }
 
+      function updateSingleHref() {
+        const phone = normalizePhone(singlePhone.value);
+        const endpoint = phone ? `https://wa.me/${phone}` : "https://wa.me/";
+        singleWaBtn.href = `${endpoint}?text=${encodeURIComponent(singlePreview.value)}`;
+      }
+
+      function refreshSingleCard() {
+        const link = buildInviteLink(singleName.value);
+        singlePreview.value = buildMessage(singleName.value, link);
+        updateSingleHref();
+      }
+
+      singleName.addEventListener("input", refreshSingleCard);
+      singlePhone.addEventListener("input", updateSingleHref);
+      singlePreview.addEventListener("input", updateSingleHref);
+
+      singleCopyMsg.addEventListener("click", async () => {
+        const ok = await copyStr(singlePreview.value);
+        showToast(ok ? "Pesan WhatsApp berhasil disalin" : "Gagal menyalin");
+      });
+
+      singleCopyLink.addEventListener("click", async () => {
+        const link = buildInviteLink(singleName.value);
+        const ok = await copyStr(link);
+        showToast(ok ? "Link undangan berhasil disalin" : "Gagal menyalin");
+      });
+
       function loadGuests() {
         try {
           const raw = localStorage.getItem(BULK_KEY);
@@ -423,7 +556,7 @@
         } catch (_) {}
       }
 
-      function render() {
+      function renderBulk() {
         itemsContainer.textContent = "";
         totalSpan.textContent = String(guests.length);
 
@@ -468,7 +601,7 @@
           waLink.addEventListener("click", () => {
             guests[idx].sent = true;
             saveGuests();
-            render();
+            renderBulk();
           });
 
           const copyMsgBtn = document.createElement("button");
@@ -496,7 +629,7 @@
           delBtn.addEventListener("click", () => {
             guests.splice(idx, 1);
             saveGuests();
-            render();
+            renderBulk();
           });
 
           actions.appendChild(waLink);
@@ -512,7 +645,10 @@
       }
 
       baseUrlInput.value = detectDefaultInviteUrl();
-      baseUrlInput.addEventListener("input", render);
+      baseUrlInput.addEventListener("input", () => {
+        refreshSingleCard();
+        renderBulk();
+      });
 
       generateBtn.addEventListener("click", () => {
         const lines = (bulkInput.value || "")
@@ -536,18 +672,19 @@
 
         bulkInput.value = "";
         saveGuests();
-        render();
+        renderBulk();
         showToast(`${lines.length} tamu berhasil ditambahkan ke daftar`);
       });
 
       clearBtn.addEventListener("click", () => {
         guests = [];
         saveGuests();
-        render();
+        renderBulk();
         showToast("Daftar tamu telah dikosongkan");
       });
 
-      render();
+      refreshSingleCard();
+      renderBulk();
     })();
   </script>
 </body>
