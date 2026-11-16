@@ -44,7 +44,10 @@
 
   let toastTimer = null;
   let introReadyTimer = null;
+  let musicFadeTimer = null;
   let isMusicPlaying = false;
+  let userPausedMusic = false;
+  let gestureUnlockBound = false;
   let activeLightboxIndex = 0;
 
   /* -------------------------------------------------------
@@ -241,48 +244,89 @@
   /* -------------------------------------------------------
      MUSIC CONTROLLER ("WEDDING NASHEED")
      ------------------------------------------------------- */
-  function setMusicUi(playing) {
+  function setMusicUi(playing, blockedAutoplay = false) {
     isMusicPlaying = playing;
     if (!musicToggle) return;
+    musicToggle.hidden = false;
     musicToggle.classList.toggle("is-playing", playing);
     musicToggle.setAttribute("aria-pressed", String(playing));
     if (musicLabel) {
-      musicLabel.textContent = playing ? "Wedding Nasheed" : "Musik Dijeda";
+      if (playing) {
+        musicLabel.textContent = "Wedding Nasheed";
+      } else {
+        musicLabel.textContent = blockedAutoplay ? "Putar Musik" : "Musik Dijeda";
+      }
     }
   }
 
-  function startMusicWithFade() {
+  function bindFirstGestureAudioUnlock() {
+    if (gestureUnlockBound) return;
+    gestureUnlockBound = true;
+
+    const unlockOnGesture = (ev) => {
+      if (musicToggle && musicToggle.contains(ev.target)) {
+        cleanup();
+        return;
+      }
+      cleanup();
+      if (userPausedMusic || isMusicPlaying) return;
+      startMusicWithFade(false);
+    };
+
+    function cleanup() {
+      document.removeEventListener("pointerdown", unlockOnGesture, true);
+      document.removeEventListener("touchstart", unlockOnGesture, true);
+      document.removeEventListener("keydown", unlockOnGesture, true);
+      gestureUnlockBound = false;
+    }
+
+    document.addEventListener("pointerdown", unlockOnGesture, { capture: true, passive: true });
+    document.addEventListener("touchstart", unlockOnGesture, { capture: true, passive: true });
+    document.addEventListener("keydown", unlockOnGesture, { capture: true, passive: true });
+  }
+
+  function startMusicWithFade(fromAutoplayAttempt = false) {
     if (!bgMusic) return;
-    bgMusic.volume = 0.05;
+    if (!bgMusic.paused && isMusicPlaying) return;
+
+    window.clearInterval(musicFadeTimer);
+    bgMusic.volume = 0.08;
     const playPromise = bgMusic.play();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise
         .then(() => {
           setMusicUi(true);
-          let vol = 0.05;
-          const fadeTimer = window.setInterval(() => {
-            vol = Math.min(0.72, vol + 0.08);
+          let vol = 0.08;
+          musicFadeTimer = window.setInterval(() => {
+            vol = Math.min(0.75, vol + 0.08);
             bgMusic.volume = vol;
-            if (vol >= 0.72) window.clearInterval(fadeTimer);
-          }, 90);
+            if (vol >= 0.75) window.clearInterval(musicFadeTimer);
+          }, 85);
         })
         .catch(() => {
-          setMusicUi(false);
+          setMusicUi(false, fromAutoplayAttempt);
+          if (fromAutoplayAttempt) {
+            bindFirstGestureAudioUnlock();
+          }
         });
     } else {
-      bgMusic.volume = 0.72;
+      bgMusic.volume = 0.75;
       setMusicUi(true);
     }
   }
 
   function initMusicToggle() {
     if (!musicToggle || !bgMusic) return;
+    musicToggle.hidden = false;
     musicToggle.addEventListener("click", () => {
       if (isMusicPlaying) {
+        userPausedMusic = true;
+        window.clearInterval(musicFadeTimer);
         bgMusic.pause();
-        setMusicUi(false);
+        setMusicUi(false, false);
       } else {
-        startMusicWithFade();
+        userPausedMusic = false;
+        startMusicWithFade(false);
       }
     });
   }
@@ -320,7 +364,9 @@
       musicToggle.hidden = false;
     }
 
-    startMusicWithFade();
+    if (!userPausedMusic) {
+      startMusicWithFade(false);
+    }
 
     window.setTimeout(() => {
       if (ayatSection) {
@@ -712,8 +758,9 @@
   document.addEventListener("DOMContentLoaded", () => {
     initGuestName();
     initPetalCanvas();
-    playIntroAnimation();
     initMusicToggle();
+    playIntroAnimation();
+    startMusicWithFade(true);
     initScrollReveal();
     initCountdown();
     initSaveDateActions();
