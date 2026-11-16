@@ -406,7 +406,7 @@
     if (!saveBtn || !menu) return;
 
     const title = "The Wedding of Riani & Rafly";
-    const location = "Kediaman Rumah Riani, Dusun 2 RT 001 RW 005, Desa Karangtengah, Kec. Karangsembung, Kab. Cirebon";
+    const location = "Kediaman Mempelai Wanita, Dusun 2 RT 001 RW 005, Desa Karangtengah, Kec. Karangsembung, Kab. Cirebon";
     const details = "Akad Nikah pukul 08.00 WIB dilanjutkan Resepsi pukul 09.00 WIB s/d selesai.";
 
     if (gcalLink) {
