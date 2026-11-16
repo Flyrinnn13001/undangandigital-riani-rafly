@@ -715,72 +715,11 @@
           <p class="closing-family">Beserta Keluarga Besar Kedua Mempelai</p>
         </div>
 
-        <!-- FITUR BAGIKAN & KIRIM LANGSUNG KE WHATSAPP -->
-        <div class="wa-share-card reveal" id="bagikan-wa">
-          <div class="wa-badge-header">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.83-.11-.42-.13-.97-.31-1.66-.61-2.92-1.26-4.83-4.21-4.98-4.4-.15-.19-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.01-2.42.27-.29.59-.36.78-.36.2 0 .39.01.56.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.56.34.07.12.07.7-.17 1.38z"/>
-            </svg>
-            <span>Bagikan &amp; Kirim ke WhatsApp</span>
-          </div>
-
-          <p class="wa-share-desc">
-            Buat link undangan khusus dengan nama tamu dan kirimkan langsung beserta teks pengantar ke WhatsApp:
-          </p>
-
-          <div class="wa-form-grid">
-            <div class="form-group">
-              <label for="wa-guest-name">Nama Tamu Tujuan</label>
-              <input type="text" id="wa-guest-name" placeholder="Contoh: Ayu Lestari" maxlength="80" />
-            </div>
-
-            <div class="form-group">
-              <label for="wa-guest-phone">Nomor WA Tamu (Opsional — kosongkan jika ingin pilih dari kontak WA)</label>
-              <input type="tel" id="wa-guest-phone" placeholder="Contoh: 081234567890" maxlength="20" />
-            </div>
-          </div>
-
-          <div class="wa-preview-box">
-            <span class="wa-preview-label">Pratinjau Pesan &amp; Link WhatsApp:</span>
-            <textarea id="wa-message-preview" rows="5" aria-label="Teks pengantar undangan WhatsApp"></textarea>
-          </div>
-
-          <div class="wa-action-buttons">
-            <a href="#" id="btn-send-wa-direct" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-send">
-              <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true">
-                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.83-.11-.42-.13-.97-.31-1.66-.61-2.92-1.26-4.83-4.21-4.98-4.4-.15-.19-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.01-2.42.27-.29.59-.36.78-.36.2 0 .39.01.56.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.56.34.07.12.07.7-.17 1.38z"/>
-              </svg>
-              <span>Kirim Langsung ke WhatsApp</span>
-            </a>
-
-            <div class="wa-secondary-btns">
-              <button type="button" class="btn-wa-outline" id="btn-copy-wa-text">
-                Salin Pesan WA
-              </button>
-              <button type="button" class="btn-wa-outline" id="btn-copy-wa-link">
-                Salin Link Saja
-              </button>
-            </div>
-
-            <a href="kirim.html" class="wa-bulk-link">
-              Buka Generator Daftar Tamu Massal (Banyak Nama Sekaligus) &rarr;
-            </a>
-          </div>
-        </div>
-
         <p class="footer-tagline">Motion Blossom • 22 Agustus 2027</p>
       </footer>
 
     </div>
   </main>
-
-  <!-- Floating Quick Share to WhatsApp Button -->
-  <a href="#bagikan-wa" class="wa-fab" id="wa-fab" aria-label="Bagikan undangan ke WhatsApp" hidden>
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.83-.11-.42-.13-.97-.31-1.66-.61-2.92-1.26-4.83-4.21-4.98-4.4-.15-.19-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.01-2.42.27-.29.59-.36.78-.36.2 0 .39.01.56.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.56.34.07.12.07.7-.17 1.38z"/>
-    </svg>
-    <span>Bagikan WA</span>
-  </a>
 
   <!-- Floating Music Control ("Wedding Nasheed") -->
   <button type="button" class="music-fab" id="music-toggle" aria-label="Nyalakan atau matikan musik Wedding Nasheed" aria-pressed="false" hidden>
