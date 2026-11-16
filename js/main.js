@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "riani_rafly_rsvp_wishes_v2";
+  const STORAGE_KEY = "riani_rafly_rsvp_wishes_v3";
   const EVENT_ISO_WIB = "2027-08-22T08:00:00+07:00";
 
   const GALLERY_ITEMS = [
@@ -23,15 +23,7 @@
     }
   ];
 
-  const DEFAULT_WISHES = [
-    {
-      name: "Fajar Nugroho",
-      status: "InsyaAllah",
-      count: 2,
-      message: "Selamat untuk Rafly dan Riani. Semoga Allah berkahi rumah tangga kalian dengan kebahagiaan dan ketenteraman.",
-      time: "3 jam lalu"
-    }
-  ];
+  const DEFAULT_WISHES = [];
 
   /* -------------------------------------------------------
      DOM REFERENCES
@@ -575,7 +567,7 @@
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (!raw) return [...DEFAULT_WISHES];
       const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) && parsed.length ? parsed : [...DEFAULT_WISHES];
+      return Array.isArray(parsed) ? parsed : [...DEFAULT_WISHES];
     } catch (_) {
       return [...DEFAULT_WISHES];
     }
@@ -616,6 +608,15 @@
       let tidakCount = 0;
 
       listEl.textContent = "";
+
+      if (!wishes.length) {
+        const empty = document.createElement("p");
+        empty.className = "wish-meta";
+        empty.style.textAlign = "center";
+        empty.style.padding = "14px 10px";
+        empty.textContent = "Belum ada ucapan. Jadilah yang pertama mengirimkan doa restu untuk Riani & Rafly.";
+        listEl.appendChild(empty);
+      }
 
       wishes.forEach((w) => {
         if (w.status === "Hadir") hadirCount += 1;
