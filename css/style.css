@@ -142,7 +142,7 @@ textarea {
 .scene-backdrop {
   z-index: 1;
   transform-origin: center 40%;
-  transform: scale(1.02) translate3d(0, 0, 0);
+  transform: scale(1.38) translate3d(0, 5%, 0);
 }
 
 .scene-backdrop-img {
@@ -162,7 +162,17 @@ textarea {
 }
 
 .cover-stage.is-playing .scene-backdrop {
-  animation: cameraApproachGazebo 4.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s forwards;
+  animation: cameraApproachGazebo 4.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s forwards;
+}
+
+.cover-stage.is-playing .scene-sunbeam {
+  animation: sunbeamVeil 0.75s ease-out forwards;
+}
+
+@keyframes sunbeamVeil {
+  0% { opacity: 0.7; background-color: rgba(255, 250, 246, 0); }
+  35% { opacity: 1; background-color: rgba(255, 250, 246, 0.78); }
+  100% { opacity: 0.7; background-color: rgba(255, 250, 246, 0); }
 }
 
 @keyframes cameraApproachGazebo {
@@ -180,7 +190,7 @@ textarea {
   }
 }
 
-/* Plane B: Tiered Stone Fountain (Passes Beneath Camera) */
+/* Plane B: Tiered Stone Fountain (Hidden on initial welcome screen, glides past during animation) */
 .scene-fountain {
   z-index: 2;
   inset: auto auto 13% 50%;
@@ -188,7 +198,7 @@ textarea {
   max-width: 300px;
   transform-origin: center 70%;
   transform: translateX(-50%) scale(0.72) translate3d(0, 2%, 0);
-  opacity: 0.97;
+  opacity: 0;
 }
 
 .fountain-img {
@@ -223,15 +233,19 @@ textarea {
 }
 
 .cover-stage.is-playing .scene-fountain {
-  animation: cameraPassFountain 3.85s cubic-bezier(0.28, 0.52, 0.32, 1) 0.35s forwards;
+  animation: cameraPassFountain 4.05s cubic-bezier(0.28, 0.52, 0.32, 1) 0.35s forwards;
 }
 
 @keyframes cameraPassFountain {
   0% {
     transform: translateX(-50%) scale(0.72) translate3d(0, 2%, 0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(-50%) scale(0.75) translate3d(0, 2.5%, 0);
     opacity: 0.97;
   }
-  36% {
+  38% {
     transform: translateX(-50%) scale(0.98) translate3d(0, 9%, 0);
     opacity: 1;
   }
@@ -249,24 +263,28 @@ textarea {
   }
 }
 
-/* Plane C: Wrought-Iron Garden Gate & Stone Pillars */
+/* Plane C: Wrought-Iron Garden Gate & Stone Pillars (Revealed when animation starts) */
 .scene-gate {
   z-index: 3;
   transform-origin: center 54%;
   transform: scale(1) translate3d(0, 0, 0);
-  opacity: 1;
+  opacity: 0;
 }
 
 .cover-stage.is-playing .scene-gate {
-  animation: cameraPassGate 2.95s cubic-bezier(0.32, 0.08, 0.25, 1) 0.65s forwards;
+  animation: cameraPassGate 3.35s cubic-bezier(0.32, 0.08, 0.25, 1) 0.35s forwards;
 }
 
 @keyframes cameraPassGate {
   0% {
     transform: scale(1) translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    transform: scale(1) translate3d(0, 0, 0);
     opacity: 1;
   }
-  42% {
+  48% {
     transform: scale(1.26) translate3d(0, 1%, 0);
     opacity: 1;
   }
@@ -397,11 +415,11 @@ textarea {
 }
 
 .cover-stage.is-playing .gate-wing-left {
-  animation: gateOpenLeft 1.95s cubic-bezier(0.36, 0.05, 0.24, 1) 0.05s forwards;
+  animation: gateOpenLeft 1.95s cubic-bezier(0.36, 0.05, 0.24, 1) 0.65s forwards;
 }
 
 .cover-stage.is-playing .gate-wing-right {
-  animation: gateOpenRight 1.95s cubic-bezier(0.36, 0.05, 0.24, 1) 0.05s forwards;
+  animation: gateOpenRight 1.95s cubic-bezier(0.36, 0.05, 0.24, 1) 0.65s forwards;
 }
 
 @keyframes gateOpenLeft {
