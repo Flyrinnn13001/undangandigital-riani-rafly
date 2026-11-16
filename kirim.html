@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generator &amp; Kirim Undangan WhatsApp — Riani &amp; Rafly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-ivory: #fcf9f4;
+      --pink-pastel: #f7dce2;
+      --pink-deep: #b8677b;
+      --blue-soft: #dcecf5;
+      --gold-mid: #c9a46c;
+      --text-heading: #4d343b;
+      --text-body: #5f4b51;
+      --text-muted: #846f75;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Playfair Display", Georgia, serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(247, 220, 226, 0.8), transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(220, 236, 245, 0.75), transparent 45%),
+        #f7efe9;
+      color: var(--text-body);
+      min-height: 100dvh;
+      padding: 24px 14px 60px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fffdf9;
+      border: 1px solid rgba(201, 164, 108, 0.55);
+      border-radius: 22px;
+      padding: 24px 20px;
+      box-shadow: 0 12px 32px rgba(124, 88, 97, 0.1);
+      margin-bottom: 18px;
+    }
+
+    .header-card {
+      text-align: center;
+      background: linear-gradient(165deg, #fffdf9 0%, #fcf2f5 60%, #eef6fb 100%);
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #3f6682;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: "Great Vibes", "Gabriola", Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: var(--text-heading);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 5px;
+    }
+
+    .hint {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 12px;
+      border: 1px solid rgba(201, 164, 108, 0.5);
+      background: #fcfaf7;
+      font-family: inherit;
+      font-size: 13.5px;
+      color: var(--text-heading);
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--pink-deep);
+      box-shadow: 0 0 0 3px rgba(247, 220, 226, 0.5);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 46px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(182, 142, 82, 0.7);
+      background: linear-gradient(135deg, #e5a3b3 0%, #d48398 100%);
+      color: #fffdf9;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .guest-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .guest-list-header h2 {
+      font-size: 16px;
+      color: var(--text-heading);
+    }
+
+    .btn-clear {
+      border: none;
+      background: none;
+      color: var(--pink-deep);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .guest-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .guest-row {
+      padding: 15px 16px;
+      border-radius: 16px;
+      background: linear-gradient(170deg, #fffdf9 0%, #fbf3f5 100%);
+      border: 1px solid rgba(201, 164, 108, 0.42);
+    }
+
+    .guest-row.is-sent {
+      background: linear-gradient(170deg, #f6fbf8 0%, #eaf6ef 100%);
+      border-color: rgba(46, 145, 86, 0.4);
+    }
+
+    .guest-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .guest-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-heading);
+    }
+
+    .sent-badge {
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #daf2e4;
+      color: #1c6b3d;
+    }
+
+    .guest-url {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      word-break: break-all;
+      margin-bottom: 10px;
+    }
+
+    .guest-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .btn-wa {
+      flex: 1 1 150px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #25d366 0%, #1da851 100%);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-sm {
+      min-height: 38px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(201, 164, 108, 0.6);
+      background: #fffdf9;
+      color: var(--text-heading);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn-del {
+      border-color: rgba(184, 103, 123, 0.4);
+      color: var(--pink-deep);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 16px);
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(77, 52, 59, 0.94);
+      color: #fffdf9;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card header-card">
+      <a href="index.html" class="back-link">&larr; Kembali ke Halaman Undangan</a>
+      <h1>Riani &amp; Rafly</h1>
+      <p class="subtitle">Dashboard Generator Nama Tamu &amp; Kirim Langsung ke WhatsApp</p>
+    </div>
+
+    <div class="card">
+      <div class="field">
+        <label for="base-url">Alamat Website Undangan (Link Dasar)</label>
+        <span class="hint">Otomatis terisi alamat website saat ini, atau tempel link GitHub Pages / Netlify Anda:</span>
+        <input type="url" id="base-url" />
+      </div>
+
+      <div class="field">
+        <label for="bulk-input">Daftar Nama Tamu (1 baris = 1 tamu)</label>
+        <span class="hint">Bisa tulis nama saja (contoh: <strong>Ayu Lestari</strong>) atau nama beserta nomor WA dipisah tanda hubung/koma (contoh: <strong>Ayu Lestari - 081234567890</strong>):</span>
+        <textarea id="bulk-input" rows="5" placeholder="Ayu Lestari&#10;Nadia Putri - 081234567890&#10;Dinda Maharani&#10;Siti Nurhaliza"></textarea>
+      </div>
+
+      <button type="button" class="btn-primary" id="btn-generate">
+        + Buat Daftar Link &amp; Tombol WhatsApp
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="guest-list-header">
+        <h2>Daftar Tamu Siap Kirim (<span id="guest-total">0</span>)</h2>
+        <button type="button" class="btn-clear" id="btn-clear-all">Hapus Semua</button>
+      </div>
+      <div class="guest-items" id="guest-items"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const BULK_KEY = "riani_rafly_wa_guest_list_v1";
+      const baseUrlInput = document.getElementById("base-url");
+      const bulkInput = document.getElementById("bulk-input");
+      const generateBtn = document.getElementById("btn-generate");
+      const clearBtn = document.getElementById("btn-clear-all");
+      const itemsContainer = document.getElementById("guest-items");
+      const totalSpan = document.getElementById("guest-total");
+      const toastEl = document.getElementById("toast");
+
+      let toastTimer = null;
+
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("is-visible");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove("is-visible"), 2400);
+      }
+
+      function detectDefaultInviteUrl() {
+        const href = window.location.href.split("?")[0].split("#")[0];
+        if (href.endsWith("/kirim.html")) {
+          return href.slice(0, -10) + "index.html";
+        }
+        return href.replace(/kirim\.html$/i, "index.html");
+      }
+
+      function normalizePhone(raw) {
+        if (!raw) return "";
+        let d = String(raw).replace(/\D+/g, "");
+        if (d.startsWith("0")) d = "62" + d.slice(1);
+        else if (d.startsWith("8")) d = "62" + d;
+        return d.length >= 9 ? d : "";
+      }
+
+      function buildInviteLink(name) {
+        const base = (baseUrlInput.value || detectDefaultInviteUrl()).trim().split("?")[0];
+        return `${base}?to=${encodeURIComponent(name.trim())}`;
+      }
+
+      function buildMessage(name, link) {
+        return [
+          "Kepada Yth.",
+          `Saudari *${name.trim()}*`,
+          "",
+          "_Assalamu’alaikum Warahmatullahi Wabarakatuh_",
+          "",
+          "Tanpa mengurangi rasa hormat, perkenankan kami mengundang Saudari untuk menghadiri acara pernikahan kami:",
+          "",
+          "*Siti Riani & Muhamad Rafly Kristiadi*",
+          "",
+          "📅 *Minggu, 22 Agustus 2027*",
+          "🕗 *Akad Nikah:* 08.00 WIB",
+          "🕘 *Resepsi:* 09.00 WIB s/d Selesai",
+          "📍 *Lokasi:* Kediaman Rumah Riani, Dusun 2 RT 001 RW 005, Desa Karangtengah, Kec. Karangsembung, Kab. Cirebon",
+          "",
+          "Berikut link undangan lengkap untuk Saudari:",
+          link,
+          "",
+          "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Saudari berkenan hadir dan memberikan doa restu.",
+          "",
+          "_Wassalamu’alaikum Warahmatullahi Wabarakatuh_",
+          "",
+          "Kami yang berbahagia,",
+          "*Riani & Rafly*"
+        ].join("\n");
+      }
+
+      async function copyStr(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          try {
+            await navigator.clipboard.writeText(text);
+            return true;
+          } catch (_) {}
+        }
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "0";
+        ta.style.left = "0";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (_) {}
+        ta.remove();
+        return ok;
+      }
+
+      function loadGuests() {
+        try {
+          const raw = localStorage.getItem(BULK_KEY);
+          if (!raw) {
+            return [
+              { name: "Ayu Lestari", phone: "", sent: false },
+              { name: "Nadia Putri", phone: "", sent: false }
+            ];
+          }
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      let guests = loadGuests();
+
+      function saveGuests() {
+        try {
+          localStorage.setItem(BULK_KEY, JSON.stringify(guests));
+        } catch (_) {}
+      }
+
+      function render() {
+        itemsContainer.textContent = "";
+        totalSpan.textContent = String(guests.length);
+
+        guests.forEach((g, idx) => {
+          const link = buildInviteLink(g.name);
+          const msg = buildMessage(g.name, link);
+          const phone = normalizePhone(g.phone);
+          const waEndpoint = phone ? `https://wa.me/${phone}` : "https://wa.me/";
+          const waUrl = `${waEndpoint}?text=${encodeURIComponent(msg)}`;
+
+          const row = document.createElement("div");
+          row.className = "guest-row" + (g.sent ? " is-sent" : "");
+
+          const top = document.createElement("div");
+          top.className = "guest-row-top";
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "guest-name";
+          nameSpan.textContent = g.name + (g.phone ? ` (${g.phone})` : "");
+          top.appendChild(nameSpan);
+
+          if (g.sent) {
+            const badge = document.createElement("span");
+            badge.className = "sent-badge";
+            badge.textContent = "Terkirim ✓";
+            top.appendChild(badge);
+          }
+
+          const urlP = document.createElement("p");
+          urlP.className = "guest-url";
+          urlP.textContent = link;
+
+          const actions = document.createElement("div");
+          actions.className = "guest-actions";
+
+          const waLink = document.createElement("a");
+          waLink.className = "btn-wa";
+          waLink.href = waUrl;
+          waLink.target = "_blank";
+          waLink.rel = "noopener noreferrer";
+          waLink.textContent = g.sent ? "Kirim Ulang ke WA" : "Kirim ke WhatsApp";
+          waLink.addEventListener("click", () => {
+            guests[idx].sent = true;
+            saveGuests();
+            render();
+          });
+
+          const copyMsgBtn = document.createElement("button");
+          copyMsgBtn.type = "button";
+          copyMsgBtn.className = "btn-sm";
+          copyMsgBtn.textContent = "Salin Pesan";
+          copyMsgBtn.addEventListener("click", async () => {
+            const ok = await copyStr(msg);
+            showToast(ok ? `Pesan untuk ${g.name} disalin` : "Gagal menyalin");
+          });
+
+          const copyLinkBtn = document.createElement("button");
+          copyLinkBtn.type = "button";
+          copyLinkBtn.className = "btn-sm";
+          copyLinkBtn.textContent = "Salin Link";
+          copyLinkBtn.addEventListener("click", async () => {
+            const ok = await copyStr(link);
+            showToast(ok ? `Link untuk ${g.name} disalin` : "Gagal menyalin");
+          });
+
+          const delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "btn-sm btn-del";
+          delBtn.textContent = "Hapus";
+          delBtn.addEventListener("click", () => {
+            guests.splice(idx, 1);
+            saveGuests();
+            render();
+          });
+
+          actions.appendChild(waLink);
+          actions.appendChild(copyMsgBtn);
+          actions.appendChild(copyLinkBtn);
+          actions.appendChild(delBtn);
+
+          row.appendChild(top);
+          row.appendChild(urlP);
+          row.appendChild(actions);
+          itemsContainer.appendChild(row);
+        });
+      }
+
+      baseUrlInput.value = detectDefaultInviteUrl();
+      baseUrlInput.addEventListener("input", render);
+
+      generateBtn.addEventListener("click", () => {
+        const lines = (bulkInput.value || "")
+          .split(/\r?\n/)
+          .map((l) => l.trim())
+          .filter(Boolean);
+
+        if (!lines.length) {
+          showToast("Ketik minimal 1 nama tamu terlebih dahulu");
+          return;
+        }
+
+        lines.forEach((line) => {
+          const parts = line.split(/\s*[-|,;]\s*/);
+          let name = parts[0] ? parts[0].trim() : "";
+          let phone = parts[1] ? parts[1].trim() : "";
+          if (name) {
+            guests.unshift({ name, phone, sent: false });
+          }
+        });
+
+        bulkInput.value = "";
+        saveGuests();
+        render();
+        showToast(`${lines.length} tamu berhasil ditambahkan ke daftar`);
+      });
+
+      clearBtn.addEventListener("click", () => {
+        guests = [];
+        saveGuests();
+        render();
+        showToast("Daftar tamu telah dikosongkan");
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
