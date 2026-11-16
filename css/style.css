@@ -162,7 +162,7 @@ textarea {
 }
 
 .cover-stage.is-playing .scene-backdrop {
-  animation: cameraApproachGazebo 4.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.45s forwards;
+  animation: cameraApproachGazebo 4.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s forwards;
 }
 
 @keyframes cameraApproachGazebo {
@@ -223,7 +223,7 @@ textarea {
 }
 
 .cover-stage.is-playing .scene-fountain {
-  animation: cameraPassFountain 4.35s cubic-bezier(0.28, 0.52, 0.32, 1) 0.55s forwards;
+  animation: cameraPassFountain 3.85s cubic-bezier(0.28, 0.52, 0.32, 1) 0.35s forwards;
 }
 
 @keyframes cameraPassFountain {
@@ -258,7 +258,7 @@ textarea {
 }
 
 .cover-stage.is-playing .scene-gate {
-  animation: cameraPassGate 3.25s cubic-bezier(0.32, 0.08, 0.25, 1) 0.85s forwards;
+  animation: cameraPassGate 2.95s cubic-bezier(0.32, 0.08, 0.25, 1) 0.65s forwards;
 }
 
 @keyframes cameraPassGate {
@@ -397,11 +397,11 @@ textarea {
 }
 
 .cover-stage.is-playing .gate-wing-left {
-  animation: gateOpenLeft 2.15s cubic-bezier(0.36, 0.05, 0.24, 1) 0.2s forwards;
+  animation: gateOpenLeft 1.95s cubic-bezier(0.36, 0.05, 0.24, 1) 0.05s forwards;
 }
 
 .cover-stage.is-playing .gate-wing-right {
-  animation: gateOpenRight 2.15s cubic-bezier(0.36, 0.05, 0.24, 1) 0.2s forwards;
+  animation: gateOpenRight 1.95s cubic-bezier(0.36, 0.05, 0.24, 1) 0.05s forwards;
 }
 
 @keyframes gateOpenLeft {
@@ -545,7 +545,7 @@ textarea {
   transform: translateY(-1px);
 }
 
-/* Plane F: Frosted Glass Cover Card */
+/* Plane F: Frosted Glass Cover Card (Visible First, Fades Out During Walk-In) */
 .cover-glass-wrap {
   position: absolute;
   inset: 0;
@@ -554,28 +554,22 @@ textarea {
   align-items: center;
   justify-content: center;
   padding: 26px;
-  opacity: 0;
-  transform: translateY(22px) scale(0.96);
-  pointer-events: none;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
 .cover-stage.is-playing .cover-glass-wrap {
-  animation: glassReveal 1.15s cubic-bezier(0.22, 0.61, 0.36, 1) 3.45s forwards;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.96);
+  pointer-events: none;
 }
 
 .cover-stage.is-arrived .cover-glass-wrap {
+  opacity: 1;
+  transform: translateY(0) scale(1);
   pointer-events: auto;
-}
-
-@keyframes glassReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(22px) scale(0.96);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 .cover-glass-panel {
